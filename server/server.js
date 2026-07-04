@@ -24,7 +24,7 @@ app.get("/add", async (request, response) => {
     await Coffee.insertMany([
         {
             name: "Espresso",
-            price: 120
+            price: 1
         },
         {
             name: "Cappuccino",
