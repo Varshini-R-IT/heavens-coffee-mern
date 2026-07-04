@@ -6,7 +6,7 @@ function App() {
 
   const getMenu = async () => {
 
-    const response = await fetch("http://localhost:5000/menu");
+    const response = await fetch("https://heavens-coffee-mern.onrender.com/menu");
 
     const data = await response.json();
 
