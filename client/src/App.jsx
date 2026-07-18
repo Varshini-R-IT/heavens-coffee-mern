@@ -12,8 +12,7 @@ function App() {
 
   const getMenu = async () => {
 
-    const response = await fetch("http://localhost:5000/menu");
-
+    const response = await fetch("https://heavens-coffee-mern-orderdb.onrender.com/menu");
     const data = await response.json();
 
     setMenu(data);
@@ -165,21 +164,20 @@ function App() {
     return;
   }
 
-  const response = await fetch("http://localhost:5000/order", {
+  const response = await fetch("https://heavens-coffee-mern-orderdb.onrender.com/order",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-    method: "POST",
+      body: JSON.stringify({
 
-    headers: {
-      "Content-Type": "application/json"
-    },
+        customerName: customerName,
 
-    body: JSON.stringify({
+        coffee: selectedCoffee.name,
 
-      customerName: customerName,
-
-      coffee: selectedCoffee.name,
-
-      price: selectedCoffee.price
+        price: selectedCoffee.price
 
     })
 
