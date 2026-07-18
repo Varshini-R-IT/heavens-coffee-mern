@@ -1,0 +1,8 @@
+VERCEL LINK : heavens-coffee-mern-584chfy4h-varshini-r-its-projects.vercel.app
+
+RENDER LINK :
+   Backend homepage : https://heavens-coffee-mern.onrender.com/
+   Coffee menu API : https://heavens-coffee-mern.onrender.com/menu
+   Add sample data : https://heavens-coffee-mern.onrender.com/add 
+
+GIT HUB LINK : https://github.com/Varshini-R-IT/heavens-coffee-mern

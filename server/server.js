@@ -1,13 +1,26 @@
 require("dotenv").config();
+const dns = require("dns");
+
+// Configure custom DNS servers for c-ares to bypass local Windows DNS resolution issues
+if (dns.setDefaultResultOrder) {
+    dns.setDefaultResultOrder("ipv4first");
+}
+try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (err) {
+    console.warn(`DNS server configuration warning: ${err.message}`);
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Coffee = require("./models/coffee");
+const Order = require("./models/order");
 const app = express();
 app.use(cors());
 app.use(express.json());
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("✅ MongoDB Connected");
 })
@@ -24,7 +37,7 @@ app.get("/add", async (request, response) => {
     await Coffee.insertMany([
         {
             name: "Espresso",
-            price: 1
+            price: 120
         },
         {
             name: "Cappuccino",
@@ -37,6 +50,35 @@ app.get("/add", async (request, response) => {
     ]);
     response.send("Coffee Menu Added Successfully!");
 });
+
+app.post("/order", async (request, response) => {
+
+    try {
+
+        const order = new Order({
+            customerName: request.body.customerName,
+            coffee: request.body.coffee,
+            price: request.body.price
+        });
+
+        await order.save();
+
+        response.json({
+            success: true,
+            message: "Order Saved Successfully"
+        });
+
+    } catch (error) {
+
+        response.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
